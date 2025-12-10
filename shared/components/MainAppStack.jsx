@@ -12,12 +12,13 @@ import StudentsManagerScreen from './screens/StudentsManagerScreen';
 import CourseDecksScreen from './screens/CourseDecksScreen';
 import AdminCoursesScreen from './screens/AdminCoursesScreen';
 import AdminCourseDetailsScreen from './screens/AdminCourseDetailsScreen';
-
+import TeachersManagerScreen from './screens/TeachersManagerScreen';
 
 // Componente simple de Navbar para la Web
 const Navbar = ({ signOut, user }) => {
   // Verificamos si es profesor o admin
   const isAdminOrProf = user?.tipo_usuario === 'Profesor' || user?.tipo_usuario === 'Admin';
+  const isAdmin = user?.tipo_usuario === 'Admin';
 
   return (
     <nav style={{ 
@@ -43,6 +44,10 @@ const Navbar = ({ signOut, user }) => {
               <>
                 <Link to="/admin" style={adminLinkStyle}>⚙️ Gestión Académica</Link>
                 <Link to="/students" style={adminLinkStyle}>👥 Alumnos</Link>
+                {isAdmin &&(
+
+               <Link to="/teachers" style={adminLinkStyle}>👨‍🏫 Profesores</Link>
+                )}
               </>
           )}
 
@@ -149,6 +154,7 @@ const MainAppStack = () => {
                     path="/admin/deck/:deckId"
                     element={<DeckEditorScreen />}
                  />
+                 <Route path="/teachers" element={<TeachersManagerScreen />} />
               </Routes>
            </div>
         </div>

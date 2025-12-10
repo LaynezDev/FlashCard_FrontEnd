@@ -2,24 +2,45 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getMyCourses, createCourse, deleteCourse } from '../../api/courseService';
 import { COLORS } from '../../constants/theme';
+import { getTeachers } from '../../api/userService'; 
+import { useAuth } from '../../context/AuthContext';
 
 const AdminCoursesScreen = () => {
+    const { user } = useAuth();
+    const isAdmin = user?.tipo_usuario === 'Admin';
+
     const [courses, setCourses] = useState([]);
+    const [teachers, setTeachers] = useState([]); // Lista para el select
     const [newName, setNewName] = useState('');
+    const [selectedProfesor, setSelectedProfesor] = useState(''); // ID del profe seleccionado
     const navigate = useNavigate();
 
     const loadData = async () => {
         const data = await getMyCourses();
         setCourses(data);
+        // Si soy admin, cargo la lista de profesores para el select
+        if (isAdmin) {
+            const tData = await getTeachers();
+            setTeachers(tData);
+        }
     };
 
     useEffect(() => { loadData(); }, []);
 
     const handleCreate = async () => {
         if (!newName.trim()) return;
+        // Si soy admin y no elegí profesor, error
+        if (isAdmin && !selectedProfesor) {
+            return alert("Debes asignar un profesor al curso.");
+        }
         try {
-            await createCourse({ nombre_curso: newName, descripcion: 'Curso escolar' });
+           await createCourse({ 
+                nombre_curso: newName, 
+                descripcion: 'Curso escolar',
+                id_profesor: selectedProfesor // Enviamos el ID
+            });
             setNewName('');
+            setSelectedProfesor('');
             loadData();
         } catch (e) { alert('Error creando curso'); }
     };
@@ -42,6 +63,21 @@ const AdminCoursesScreen = () => {
                     value={newName} onChange={e => setNewName(e.target.value)}
                     style={styles.input}
                 />
+                {/* SELECT DE PROFESORES (Solo visible para Admin) */}
+                {isAdmin && (
+                    <select 
+                        value={selectedProfesor}
+                        onChange={e => setSelectedProfesor(e.target.value)}
+                        style={styles.select}
+                    >
+                        <option value="">-- Asignar Profesor --</option>
+                        {teachers.map(t => (
+                            <option key={t.id_usuario} value={t.id_usuario}>
+                                {t.nombre}
+                            </option>
+                        ))}
+                    </select>
+                )}
                 <button onClick={handleCreate} style={styles.btnPrimary}>+ Crear Curso</button>
             </div>
 
