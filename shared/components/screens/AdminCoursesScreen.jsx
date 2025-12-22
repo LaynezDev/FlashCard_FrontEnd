@@ -5,6 +5,7 @@ import { COLORS } from '../../constants/theme';
 import { getTeachers } from '../../api/userService'; 
 import { useAuth } from '../../context/AuthContext';
 
+
 const AdminCoursesScreen = () => {
     const { user } = useAuth();
     const isAdmin = user?.tipo_usuario === 'Admin';
@@ -109,7 +110,8 @@ const styles = {
     grid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 20 },
     card: { backgroundColor: '#fff', padding: 20, borderRadius: 8, borderLeft: `5px solid ${COLORS.SECONDARY}`, boxShadow: '0 2px 5px rgba(0,0,0,0.05)' },
     btnManage: { flex: 1, backgroundColor: '#E0E0E0', border: 'none', padding: 8, borderRadius: 4, cursor: 'pointer', fontWeight: 'bold' },
-    btnDelete: { backgroundColor: '#FFEBEE', border: 'none', padding: 8, borderRadius: 4, cursor: 'pointer' }
+    btnDelete: { backgroundColor: '#FFEBEE', border: 'none', padding: 8, borderRadius: 4, cursor: 'pointer' },
+    select:{backgroundColor: '#fff', border: '1px solid #ccc', borderRadius: 4, padding: 10, cursor: 'pointer' }
 };
 
 export default AdminCoursesScreen;

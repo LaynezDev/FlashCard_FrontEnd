@@ -75,6 +75,14 @@ const DashboardScreen = () => {
                                 </div>
                             </div>
                         )}
+
+                        <div style={styles.adminCard} onClick={() => navigate("/progress-report")}>
+                            <div style={styles.iconCircle}>📊</div>
+                            <div>
+                                <h3 style={{ margin: "0 0 5px 0" }}>Reportes</h3>
+                                <p style={{ margin: 0, fontSize: "13px", color: "#666" }}>Ver avance de alumnos.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             )}

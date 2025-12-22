@@ -14,7 +14,7 @@ import AdminCoursesScreen from "./screens/AdminCoursesScreen";
 import AdminCourseDetailsScreen from "./screens/AdminCourseDetailsScreen";
 import TeachersManagerScreen from "./screens/TeachersManagerScreen";
 import SchoolStructureScreen from "./screens/SchoolStructureScreen";
-
+import TeacherProgressScreen from './screens/TeacherProgressScreen';
 // Componente simple de Navbar para la Web
 const Navbar = ({ signOut, user }) => {
     // Verificamos si es profesor o admin
@@ -116,6 +116,7 @@ const MainAppStack = () => {
                         <Route path="/admin/deck/:deckId" element={<DeckEditorScreen />} />
                         <Route path="/teachers" element={<TeachersManagerScreen />} />
                         <Route path="/structure" element={<SchoolStructureScreen />} />
+                        <Route path="/progress-report" element={<TeacherProgressScreen />} />
                     </Routes>
                 </div>
             </div>
