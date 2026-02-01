@@ -85,7 +85,30 @@ const StudentsManagerScreen = () => {
 
             <div style={{ display: "flex", gap: "40px", marginTop: "30px", flexWrap: "wrap" }}>
                 {/* COLUMNA IZQ: Formulario (Mantén tu código anterior aquí) */}
-                <div style={{ flex: 1, minWidth: "300px" }}>{/* ... Formulario de Matricular ... */}</div>
+                {/* COLUMNA IZQUIERDA: Formulario de Registro */}
+                <div style={{ flex: 1, minWidth: '300px' }}>
+                    <div style={styles.formCard}>
+                        <h3 style={{ marginTop: 0 }}>Matricular Nuevo Alumno</h3>
+                        <form onSubmit={handleRegister} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                            <input 
+                                placeholder="Nombre Completo" 
+                                value={nombre} onChange={e => setNombre(e.target.value)} 
+                                style={styles.input} required
+                            />
+                            <input 
+                                placeholder="Correo Electrónico" type="email"
+                                value={email} onChange={e => setEmail(e.target.value)} 
+                                style={styles.input} required
+                            />
+                            <input 
+                                placeholder="Contraseña Temporal" 
+                                value={password} onChange={e => setPassword(e.target.value)} 
+                                style={styles.input} required
+                            />
+                            <button type="submit" style={styles.btnAdd}>Registrar Alumno</button>
+                        </form>
+                    </div>
+                </div>
 
                 {/* COLUMNA DER: Tabla */}
                 <div style={{ flex: 2, minWidth: "300px" }}>
@@ -188,7 +211,12 @@ const styles = {
         width: "400px",
         boxShadow: "0 5px 15px rgba(0,0,0,0.3)",
     },
+    formCard: { backgroundColor: '#fff', padding: 25, borderRadius: 10, boxShadow: '0 4px 10px rgba(0,0,0,0.05)' },
+    tableCard: { backgroundColor: '#fff', padding: 20, borderRadius: 10, boxShadow: '0 4px 10px rgba(0,0,0,0.05)', overflowX: 'auto' },
+    input: { padding: 12, borderRadius: 5, border: '1px solid #ddd', fontSize: 16 },
     select: { width: "100%", padding: 10, borderRadius: 5, border: "1px solid #ccc", marginTop: 10 },
+    btnAdd: { backgroundColor: COLORS.SECONDARY, color: '#fff', padding: 12, border: 'none', borderRadius: 5, cursor: 'pointer', fontWeight: 'bold' },
+    badge: { backgroundColor: '#E8F5E9', color: '#2E7D32', padding: '4px 8px', borderRadius: '12px', fontSize: '12px', fontWeight: 'bold' },
     btnCancel: { backgroundColor: "#ccc", border: "none", padding: "10px 15px", borderRadius: 5, cursor: "pointer" },
     btnConfirm: { backgroundColor: COLORS.PRIMARY, color: "#fff", border: "none", padding: "10px 15px", borderRadius: 5, cursor: "pointer", fontWeight: "bold" },
 };
