@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "expo-speech": "^14.0.8",
     "jwt-decode": "^4.0.0"
   }
 }

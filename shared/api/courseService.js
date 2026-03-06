@@ -23,3 +23,8 @@ export const enrollStudentInCourse = async (studentId, courseId) => {
     const response = await api.post('/courses/enroll', { studentId, courseId });
     return response.data;
 };
+export const getFlashcardsByDeck = async (deckId) => {
+    const response = await api.get(`/decks/${deckId}/cards`);
+    console.log("Flashcards obtenidas:", response.data);
+    return response.data;
+};

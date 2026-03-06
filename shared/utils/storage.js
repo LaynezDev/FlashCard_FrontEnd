@@ -1,47 +1,37 @@
-// shared/utils/storage.js (CÓDIGO HÍBRIDO DEFINITIVO)
+// shared/utils/storage.js
 
-// Detectamos si estamos en un entorno donde window no existe (React Native)
-const isMobile = typeof window === 'undefined' || (typeof navigator !== 'undefined' && navigator.product === 'ReactNative');
+// 1. Detectar entorno de forma infalible
+const isWeb = typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';
 
-let AsyncStorage;
-
-if (isMobile) {
-    // Importación dinámica (require) para que la Web no explote al leer esto
-    try {
-        AsyncStorage = require('@react-native-async-storage/async-storage').default;
-    } catch (e) {
-        console.error("AsyncStorage no encontrado. Instálalo en mobile-app.");
-    }
-}
-
-export const getItem = async (key) => {
-    if (isMobile) {
-        return await AsyncStorage.getItem(key);
+/**
+ * Esta función obtiene el motor de almacenamiento de forma dinámica
+ * para evitar que Webpack intente resolver dependencias nativas en la Web.
+ */
+const getStorage = () => {
+    if (isWeb) {
+        return {
+            getItem: (key) => Promise.resolve(window.localStorage.getItem(key)),
+            setItem: (key, value) => Promise.resolve(window.localStorage.setItem(key, value)),
+            removeItem: (key) => Promise.resolve(window.localStorage.removeItem(key)),
+        };
     } else {
-        // Web: chequeo seguro
-        if (typeof window !== 'undefined' && window.localStorage) {
-            return window.localStorage.getItem(key);
-        }
-        return null;
-    }
-};
-
-export const setItem = async (key, value) => {
-    if (isMobile) {
-        await AsyncStorage.setItem(key, value);
-    } else {
-        if (typeof window !== 'undefined' && window.localStorage) {
-            window.localStorage.setItem(key, value);
+        // En Móvil, requerimos la librería. 
+        // El 'require' dentro de una función evita que Webpack Web lo procese agresivamente.
+        try {
+            return require('@react-native-async-storage/async-storage').default;
+        } catch (error) {
+            console.warn("AsyncStorage no está disponible en este entorno.");
+            return {
+                getItem: () => Promise.resolve(null),
+                setItem: () => Promise.resolve(),
+                removeItem: () => Promise.resolve(),
+            };
         }
     }
 };
 
-export const removeItem = async (key) => {
-    if (isMobile) {
-        await AsyncStorage.removeItem(key);
-    } else {
-        if (typeof window !== 'undefined' && window.localStorage) {
-            window.localStorage.removeItem(key);
-        }
-    }
-};
+const storage = getStorage();
+
+export const getItem = async (key) => await storage.getItem(key);
+export const setItem = async (key, value) => await storage.setItem(key, value);
+export const removeItem = async (key) => await storage.removeItem(key);

@@ -11,3 +11,10 @@ export const getTeacherReport = async (courseId, deckId) => {
     const response = await api.get(`/progress/report/${courseId}/${deckId}`);
     return response.data; // Retorna { deck_info: {}, students: [] }
 };
+export const saveProgress = async (flashcardId, nivelDominio) => {
+    const response = await api.post('/progress/review', {
+        id_flashcard: flashcardId,
+        nivel_dominio: nivelDominio
+    });
+    return response.data;
+};
