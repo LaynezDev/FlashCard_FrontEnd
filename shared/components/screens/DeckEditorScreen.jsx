@@ -64,8 +64,9 @@ const DeckEditorScreen = () => {
 
     const handleDelete = async (id) => {
         if (window.confirm('¿Eliminar esta tarjeta?')) {
-            try {
-                await api.delete(`${id}/cards`);
+            try { 
+                await api.delete(`decks/cards/${id}`);
+                // await api.delete(`${id}/cards`);
                 loadCards();
             } catch (error) {
                 alert('No se pudo eliminar');

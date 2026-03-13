@@ -6,7 +6,7 @@ import { getItem } from '../utils/storage';
 
 // URL base de tu API (Asegúrate de que para Android Emulator sea 10.0.2.2, no localhost)
 // Para pruebas en celular real, usa tu IP local (ej: http://192.168.1.50:3000/api/v1)
-const API_URL = 'http://192.168.0.10:3000/api/v1'; // Ejemplo para Android Emulator
+const API_URL = 'http://192.168.0.2:3000/api/v1'; // Ejemplo para Android Emulator
 
 const axiosInstance = axios.create({
   baseURL: API_URL,
@@ -35,5 +35,6 @@ axiosInstance.interceptors.request.use(
     return Promise.reject(error);
   }
 );
+
 
 export default axiosInstance;
