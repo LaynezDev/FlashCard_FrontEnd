@@ -6,7 +6,7 @@ import { useAuth } from '../context/AuthContext';
 
 // Estilos de ejemplo para la web (Sustituyen a theme de Galio)
 const WEB_STYLES = {
-    PRIMARY_COLOR: '#4CAF50',
+    PRIMARY_COLOR: '#1AAEC1',
     DANGER_COLOR: '#FF5722',
     FONT_SIZE: '16px',
 };
