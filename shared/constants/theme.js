@@ -1,6 +1,6 @@
 export const COLORS = {
-  PRIMARY: '#4CAF50',    // Verde Brainscape (Acción principal / Estudiar)
-  SECONDARY: '#2E7D32',  // Verde oscuro (Headers / Textos fuertes)
+  PRIMARY: '#1AAEC1',    // Verde Brainscape (Acción principal / Estudiar)
+  SECONDARY: '#14808F',  // Verde oscuro (Headers / Textos fuertes)
   WHITE: '#FFFFFF',
   BACKGROUND: '#F4F6F8', // Gris muy suave para el fondo (común en dashboards)
   TEXT: '#333333',
