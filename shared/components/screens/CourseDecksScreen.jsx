@@ -29,7 +29,7 @@ const CourseDecksScreen = () => {
         <DeckItemWithProgress 
             key={deck.id_deck} 
             deck={deck} 
-            onStudy={(id) => navigate(`/study/${id}`)} 
+            onStudy={(id) => navigate(`/study/${id}`, { state: { deckName: deck.nombre_deck } })} 
         />
     ))}
       </div>
