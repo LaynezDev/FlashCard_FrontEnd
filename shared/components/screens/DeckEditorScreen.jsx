@@ -83,10 +83,14 @@ const DeckEditorScreen = () => {
                         <option value="texto">Texto Plano</option>
                         <option value="imagen">Imagen (Visual)</option>
                         <option value="narrado">Dictado (Voz)</option>
+                        <option value="traduccion">Traducción (Escribir)</option>
                     </select>
 
                     <textarea 
-                        placeholder={tipo === 'narrado' ? "Escribe el texto que el sistema leerá..." : "Pregunta"}
+                        placeholder={
+                            tipo === 'narrado' ? "Escribe el texto que el sistema leerá..." : 
+                            tipo === 'traduccion' ? "Frase a traducir (Ej: Soy bueno)" : "Pregunta"
+                        }
                         value={pregunta} 
                         onChange={(e) => setPregunta(e.target.value)}
                         style={styles.textarea} required 
@@ -99,7 +103,9 @@ const DeckEditorScreen = () => {
                     )}
 
                     <input 
-                        placeholder="Respuesta Correcta"
+                        placeholder={
+                            tipo === 'traduccion' ? "Traducción correcta (Ej: I am good)" : "Respuesta Correcta"
+                        }
                         value={respuesta} 
                         onChange={(e) => setRespuesta(e.target.value)}
                         style={styles.input} required 
