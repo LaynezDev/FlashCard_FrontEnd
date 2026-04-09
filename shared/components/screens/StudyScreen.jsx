@@ -29,21 +29,21 @@ const StudyScreen = () => {
         window.speechSynthesis.speak(utterance);
     };
 
-    // --- Comparador de Dictado ---
-    const checkDictado = () => {
-        const original = currentCard.pregunta.toLowerCase().trim();
-        const typed = userText.toLowerCase().trim();
+    // --- Comparador Universal (Dictado y Traducción) ---
+    const checkAnswer = () => {
+        // Si es traducción, comparamos con la RESPUESTA. Si es dictado, con la PREGUNTA.
+        const targetText = currentCard.tipo === 'traduccion' ? currentCard.respuesta : currentCard.pregunta;
+
+        const original = targetText.toLowerCase().trim().split(/\s+/);
+        const typed = userText.toLowerCase().trim().split(/\s+/);
         
-        const wordsOrig = original.split(/\s+/);
-        const wordsTyped = typed.split(/\s+/);
-        
-        const resultParts = wordsTyped.map((word, i) => ({
+        const resultParts = typed.map((word, i) => ({
             text: word,
-            correct: word === wordsOrig[i]
+            correct: word === original[i]
         }));
 
         const matches = resultParts.filter(p => p.correct).length;
-        const score = Math.round((matches / wordsOrig.length) * 100);
+        const score = Math.round((matches / original.length) * 100);
         
         setComparison({ score, parts: resultParts });
     };
@@ -86,7 +86,7 @@ const StudyScreen = () => {
                                     onChange={(e) => setUserText(e.target.value)}
                                     placeholder="Escribe lo que escuchas..."
                                 />
-                                <button onClick={checkDictado} style={styles.checkBtn}>Validar</button>
+                                <button onClick={checkAnswer} style={styles.checkBtn}>Validar</button>
                                 
                                 {comparison && (
                                     <div style={styles.feedback}>
@@ -100,7 +100,35 @@ const StudyScreen = () => {
                                 )}
                             </div>
                         )}
-
+                        {/* CATEGORÍA TRADUCCIÓN */}
+                        {currentCard.tipo === 'traduccion' && (
+                            <div style={styles.dictadoContainer}>
+                                <h2 style={{ color: '#555', marginBottom: '20px' }}>
+                                    Traducción: "{currentCard.pregunta}"
+                                </h2>
+                                
+                                <input 
+                                    style={styles.input}
+                                    value={userText}
+                                    onChange={(e) => setUserText(e.target.value)}
+                                    placeholder="Escribe la traducción aquí..."
+                                />
+                                
+                                {/* Usamos la misma función universal */}
+                                <button onClick={checkAnswer} style={styles.checkBtn}>Verificar</button>
+                                
+                                {comparison && (
+                                    <div style={styles.feedback}>
+                                        {comparison.parts.map((p, i) => (
+                                            <span key={i} style={{ color: p.correct ? '#4CAF50' : '#F44336', fontWeight: 'bold' }}>
+                                                {p.text} 
+                                            </span>
+                                        ))}
+                                        <p style={{fontWeight: 'bold'}}>Precisión: {comparison.score}%</p>
+                                    </div>
+                                )}
+                            </div>
+                        )}
                         {/* TEXTO NORMAL */}
                         {currentCard.tipo === 'texto' && <h2>{currentCard.pregunta}</h2>}
                         
