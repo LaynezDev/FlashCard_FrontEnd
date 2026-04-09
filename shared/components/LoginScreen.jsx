@@ -225,7 +225,7 @@ const LoginScreen = () => {
                     
                     <div className="input-group">
                         <input 
-                            type="email" 
+                            type="text" 
                             placeholder="Usuario / Correo" 
                             value={email} 
                             onChange={(e) => setEmail(e.target.value)} 
@@ -266,9 +266,9 @@ const LoginScreen = () => {
                         {loading ? 'Accediendo...' : 'Acceder'}
                     </button>
                     
-                    <div className="register-text">
+                    {/* <div className="register-text">
                         Don't have an account? <a href="#register">Register</a>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </>
