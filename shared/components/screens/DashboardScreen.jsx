@@ -40,52 +40,7 @@ const DashboardScreen = () => {
         <div>
             {/* ==============================================
           SECCIÓN ADMINISTRATIVA (SOLO PROFESORES/ADMIN)
-         ============================================== */}
-            {isProfesor && (
-                <div style={styles.adminSection}>
-                    <h2 style={{ color: "#2E7D32", marginTop: 0, display: "flex", alignItems: "center", gap: 10 }}>⚙️ Panel de Gestión</h2>
-                    <p style={{ margin: "0 0 20px 0", color: "#555" }}>Herramientas para administrar tu centro educativo.</p>
-
-                    <div style={styles.adminGrid}>
-                        {/* BOTÓN 1: GESTIONAR CURSOS */}
-                        <div style={styles.adminCard} onClick={() => navigate("/admin")}>
-                            <div style={styles.iconCircle}>📚</div>
-                            <div>
-                                <h3 style={{ margin: "0 0 5px 0" }}>Cursos y Contenido</h3>
-                                <p style={{ margin: 0, fontSize: "13px", color: "#666" }}>Crear cursos, decks y tarjetas.</p>
-                            </div>
-                        </div>
-
-                        {/* BOTÓN 2: GESTIONAR ALUMNOS */}
-                        <div style={styles.adminCard} onClick={() => navigate("/students")}>
-                            <div style={styles.iconCircle}>👥</div>
-                            <div>
-                                <h3 style={{ margin: "0 0 5px 0" }}>Mis Alumnos</h3>
-                                <p style={{ margin: 0, fontSize: "13px", color: "#666" }}>Inscribir estudiantes a cursos.</p>
-                            </div>
-                        </div>
-
-                        {/* BOTÓN 3: ESTRUCTURA ACADÉMICA (NUEVO) */}
-                        {isAdmin && (
-                            <div style={styles.adminCard} onClick={() => navigate("/structure")}>
-                                <div style={styles.iconCircle}>🏫</div>
-                                <div>
-                                    <h3 style={{ margin: "0 0 5px 0" }}>Grados y Secciones</h3>
-                                    <p style={{ margin: 0, fontSize: "13px", color: "#666" }}>Configurar aulas (1ro A, 1ro B).</p>
-                                </div>
-                            </div>
-                        )}
-
-                        <div style={styles.adminCard} onClick={() => navigate("/progress-report")}>
-                            <div style={styles.iconCircle}>📊</div>
-                            <div>
-                                <h3 style={{ margin: "0 0 5px 0" }}>Reportes</h3>
-                                <p style={{ margin: 0, fontSize: "13px", color: "#666" }}>Ver avance de alumnos.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
+         ============================================== */}            
 
             {/* ==============================================
           SECCIÓN DE CURSOS (PARA TODOS)

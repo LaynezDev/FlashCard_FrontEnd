@@ -10,6 +10,12 @@ export const createStudent = async (studentData) => {
     return response.data;
 };
 
+export const updateStudentPassword = async (studentId, password) => {
+    // Hacemos una petición PUT a un endpoint específico para cambiar la contraseña
+    const response = await api.put(`/users/students/${studentId}/password`, { password });
+    return response.data;
+};
+
 // ... 
 export const getTeachers = async () => {
     const response = await api.get('/users/teachers');
