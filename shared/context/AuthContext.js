@@ -15,20 +15,23 @@ export const AuthProvider = ({ children }) => {
     const decodeAndSetUser = (token) => {
         try {
             const decoded = jwtDecode(token);
-            // El backend guarda la info dentro de "user": { user: { id_usuario... } }
-            // O directamente en la raíz del payload. Depende de tu authController.
-            // Asumiremos que tu backend hace: payload = { user: { ... } }
+            
+            if (decoded.exp && decoded.exp * 1000 < Date.now()) {
+                console.warn("Token expirado");
+                signOut();
+                return;
+            }
             
             const userData = decoded.user || decoded; 
 
             setUser({
                 token,
                 isAuthenticated: true,
-                ...userData // Esto mezcla id_usuario, tipo_usuario, id_centro en el objeto user
+                ...userData
             });
         } catch (error) {
             console.error("Token inválido", error);
-            signOut(); // Si el token está corrupto, cerramos sesión
+            signOut();
         }
     };
 
