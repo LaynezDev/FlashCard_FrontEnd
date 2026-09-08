@@ -1,6 +1,9 @@
 {
-  "dependencies": {
-    "expo-speech": "^14.0.8",
-    "jwt-decode": "^4.0.0"
-  }
+  "name": "flashcard-frontend",
+  "private": true,
+  "workspaces": [
+    "mobile-app",
+    "web-v2",
+    "shared"
+  ]
 }
