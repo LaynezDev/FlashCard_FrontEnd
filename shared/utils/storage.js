@@ -1,11 +1,12 @@
 // shared/utils/storage.js
 
-// 1. Detectar entorno de forma infalible
 const isWeb = typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';
 
 /**
- * Esta función obtiene el motor de almacenamiento de forma dinámica
- * para evitar que Webpack intente resolver dependencias nativas en la Web.
+ * Obtiene el motor de almacenamiento según el entorno.
+ * En web: usa localStorage nativo.
+ * En móvil: usa @react-native-async-storage/async-storage.
+ * @returns {{ getItem: Function, setItem: Function, removeItem: Function }}
  */
 const getStorage = () => {
     if (isWeb) {
@@ -15,8 +16,6 @@ const getStorage = () => {
             removeItem: (key) => Promise.resolve(window.localStorage.removeItem(key)),
         };
     } else {
-        // En Móvil, requerimos la librería. 
-        // El 'require' dentro de una función evita que Webpack Web lo procese agresivamente.
         try {
             return require('@react-native-async-storage/async-storage').default;
         } catch (error) {
@@ -32,6 +31,24 @@ const getStorage = () => {
 
 const storage = getStorage();
 
+/**
+ * Obtiene un valor del almacenamiento por su clave.
+ * @param {string} key - Clave del elemento a obtener
+ * @returns {Promise<string|null>} Valor almacenado o null
+ */
 export const getItem = async (key) => await storage.getItem(key);
+
+/**
+ * Guarda un valor en el almacenamiento.
+ * @param {string} key - Clave del elemento
+ * @param {string} value - Valor a almacenar
+ * @returns {Promise<void>}
+ */
 export const setItem = async (key, value) => await storage.setItem(key, value);
+
+/**
+ * Elimina un elemento del almacenamiento.
+ * @param {string} key - Clave del elemento a eliminar
+ * @returns {Promise<void>}
+ */
 export const removeItem = async (key) => await storage.removeItem(key);

@@ -1,6 +1,21 @@
 import { useState, useEffect } from 'react';
 import { getCardsForStudy, registerCardReview } from '../api/deckService';
 
+/**
+ * Hook personalizado para gestionar una sesión de estudio de flashcards.
+ * Maneja la carga de tarjetas, navegación, volteo y calificación.
+ * @param {number} deckId - ID del deck a estudiar
+ * @returns {{
+ *   currentCard: object,
+ *   totalCards: number,
+ *   progress: number,
+ *   isFlipped: boolean,
+ *   loading: boolean,
+ *   isFinished: boolean,
+ *   flipCard: Function,
+ *   rateCard: Function
+ * }}
+ */
 export const useStudySession = (deckId) => {
     const [cards, setCards] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -8,7 +23,6 @@ export const useStudySession = (deckId) => {
     const [loading, setLoading] = useState(true);
     const [isFinished, setIsFinished] = useState(false);
 
-    // Cargar tarjetas al iniciar
     useEffect(() => {
         const loadCards = async () => {
             try {
@@ -24,22 +38,25 @@ export const useStudySession = (deckId) => {
         if (deckId) loadCards();
     }, [deckId]);
 
-    // Voltear tarjeta
+    /**
+     * Voltea la tarjeta actual para mostrar la respuesta.
+     */
     const flipCard = () => setIsFlipped(true);
 
-    // Calificar y pasar a la siguiente
+    /**
+     * Califica la tarjeta actual con un nivel de confianza y avanza a la siguiente.
+     * @param {number} confidence - Nivel de dominio del 1 al 5
+     */
     const rateCard = async (confidence) => {
         const currentCard = cards[currentIndex];
         
-        // 1. Enviar dato a la API (sin esperar para que la UI sea rápida)
         registerCardReview(currentCard.id_flashcard, confidence).catch(console.error);
 
-        // 2. Avanzar
         if (currentIndex < cards.length - 1) {
             setIsFlipped(false);
             setCurrentIndex(prev => prev + 1);
         } else {
-            setIsFinished(true); // Se acabaron las tarjetas del lote
+            setIsFinished(true);
         }
     };
 

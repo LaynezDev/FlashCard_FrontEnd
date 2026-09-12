@@ -8,6 +8,11 @@ import { getItem } from '../utils/storage';
 // Para pruebas en celular real, usa tu IP local (ej: http://192.168.1.50:3000/api/v1)
 const API_URL = process.env.EXPO_PUBLIC_API_URL || process.env.REACT_APP_API_URL || 'http://192.168.0.2:3000/api/v1';
 
+/**
+ * Instancia de Axios configurada para la API de FlashCard.
+ * Incluye interceptores para: inyectar JWT automáticamente y manejar errores HTTP.
+ * @type {import('axios').AxiosInstance}
+ */
 const axiosInstance = axios.create({
   baseURL: API_URL,
   headers: {
@@ -15,12 +20,13 @@ const axiosInstance = axios.create({
   },
 });
 
-// Interceptor para inyectar el token
+/**
+ * Interceptor de solicitudes: inyecta el token JWT en el encabezado Authorization.
+ * Obtiene el token de forma asíncrona desde storage (compatible web/móvil).
+ */
 axiosInstance.interceptors.request.use(
-  // 1. Convertimos la función a ASYNC para poder esperar el token
   async (config) => {
     try {
-        // 2. Usamos la función segura que funciona en Web y Móvil
         const token = await getItem('jwt_token'); 
         
         if (token) {
@@ -36,6 +42,13 @@ axiosInstance.interceptors.request.use(
   }
 );
 
+/**
+ * Interceptor de respuestas: maneja errores HTTP globalmente.
+ * - 401: Sesión expirada, limpia token del storage
+ * - 403: Sin permisos
+ * - 500: Error del servidor
+ * - Sin respuesta: Error de conexión
+ */
 axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {

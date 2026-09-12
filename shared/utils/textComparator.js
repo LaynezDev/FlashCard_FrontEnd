@@ -1,8 +1,16 @@
+/**
+ * Compara dos cadenas de texto y retorna un puntaje de similitud basado en palabras.
+ * Normaliza a minúsculas y elimina espacios extra antes de comparar.
+ * @param {string} original - Cadena original de referencia
+ * @param {string} input - Cadena ingresada por el usuario
+ * @returns {{ score: number, parts: Array<{ text: string, correct: boolean }> }}
+ *   score: porcentaje de coincidencia (0-100)
+ *   parts: array con cada palabra y si es correcta
+ */
 export const compareStrings = (original, input) => {
     const s1 = original.toLowerCase().trim();
     const s2 = input.toLowerCase().trim();
     
-    // Si son idénticos
     if (s1 === s2) return { score: 100, parts: [{ text: input, correct: true }] };
 
     const words1 = s1.split(' ');
