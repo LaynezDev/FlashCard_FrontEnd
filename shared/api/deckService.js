@@ -24,7 +24,7 @@ export const startStudySession = (deckId) => {
  * @returns {Promise<object>} Respuesta del servidor con next_review_in_days
  */
 export const registerCardReview = (cardId, confidence) => {
-  return api.post(`/progress/flashcards/${cardId}/review`, { confianza: confidence });
+  return api.post(`/progress/flashcards/${cardId}/review`, { nivel_dominio: confidence });
 };
 
 /**
