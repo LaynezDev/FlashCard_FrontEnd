@@ -1,7 +1,6 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client'; 
 import { AuthProvider } from '@shared/context/AuthContext'; 
-import App from './App';
 import RootNavigator from '@shared/components/RootNavigator';
 
 /**

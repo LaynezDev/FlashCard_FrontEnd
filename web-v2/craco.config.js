@@ -36,6 +36,12 @@ module.exports = {
         }
       }
 
+      // 4. Ignorar módulo de React Native en web (async-storage)
+      webpackConfig.ignoreWarnings = [
+        ...(webpackConfig.ignoreWarnings || []),
+        { module: /@react-native-async-storage/ },
+      ];
+
       return webpackConfig;
     },
   },
