@@ -28,8 +28,7 @@ export const getTeacherReport = async (courseId, deckId) => {
  * @returns {Promise<object>} Confirmación del progreso guardado
  */
 export const saveProgress = async (flashcardId, nivelDominio) => {
-    const response = await api.post('/progress/review', {
-        id_flashcard: flashcardId,
+    const response = await api.post(`/progress/flashcards/${flashcardId}/review`, {
         nivel_dominio: nivelDominio
     });
     return response.data;
